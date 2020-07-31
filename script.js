@@ -9,7 +9,11 @@ const matched = document.getElementById('matched');
 const notMatched = document.getElementById('not-matched');
 const tryStatus = document.getElementById('try-status');
 
-// Generating random 4 digit number here..
+let elem = document.getElementById('time-counter');
+
+submit.disabled = true;
+
+// Generating random 4 digit number here, and some other task..
 function generatePin(){
     let pinGeneratorButton = Math.floor(1000 + Math.random() * 9000); // Making 4 digit random number.
     showPin.value = pinGeneratorButton;
@@ -17,7 +21,11 @@ function generatePin(){
     notMatched.style.display = 'none';
     matchPin.value = '';
     submitCount = 0;            // Clicks for generating pin will make submit count 0.
+    elem.style.display = 'block';
+    submit.disabled = false;
     remainTry(submitCount);
+    timer();
+    submit.removeAttribute('title');
 }
 
 // Making buttons clickable and able to show numbers
@@ -39,7 +47,23 @@ function clearButton(){
     matchPin.value = '';
 }
 
-// When submit Button will clicks this function will work.
+let submitCount = 0; // It's for counting clicks on submit button.
+// How many Try are left this function will calculate that.
+function remainTry(clickCount){
+    if(clickCount < 3){
+        tryStatus.innerText = 3 - clickCount;
+    } 
+    if(clickCount == 3){
+        tryStatus.innerText = 0;
+        submit.disabled = true;
+        
+    }
+    if(clickCount == 0){
+        tryStatus.innerText = 3;
+        submit.disabled = false;
+    }
+}
+
 function submitButton(){
     let matchPinValue = matchPin.value;
     let randomPin = showPin.value;
@@ -56,23 +80,42 @@ function submitButton(){
     else if (matchPinValue === randomPin){
         matched.style.display = 'block';
         notMatched.style.display = 'none';
-        submitCount = 0;                    // If Pin are matched submit will be 0.
+        submitCount = 0;                    // If Pin are matched submit count will be 0.
         remainTry(submitCount);
+        removeTimer();             // This will reset if pin's are matched.
+        elem.style.display = 'none'; // If pin are matched then timer will be removed.
     }
 }
 
-let submitCount = 0; // It's for counting clicks on submit button.
-// How many Try are left this function will calculate that.
-function remainTry(clickCount){
-    if(clickCount < 3){
-        tryStatus.innerText = 3 - clickCount;
-    } 
-    if(clickCount == 3){
-        tryStatus.innerText = 0;
-        submit.disabled = true;
+// Timer Section
+let timerId;
+
+function timer(){
+    let timeLeft = 10;
+    timerId = setInterval(countdown, 1000);
+    function countdown() {
+        if (timeLeft == -1) {
+            // clearTimeout(timerId);
+            // submit.disabled = true;
+            removeTimer();
+            doSomething();
+        } else {
+            elem.innerText = timeLeft + ' Second Remaining';
+            timeLeft--;
+            pinGenerator.disabled = true;
+            pinGenerator.style.backgroundColor = '#293b65';
+        } 
     }
-    if(clickCount == 0){
-        tryStatus.innerText = 3;
-        submit.disabled = false;
+    function doSomething() {
+        elem.innerText = 'Your Time is Over, Try Again!';
+        // pinGenerator.disabled = false;
+        // pinGenerator.style.backgroundColor = '#495BC3';
     }
+}
+
+// Reset Everything if Pin's are matched
+function removeTimer(){
+    clearTimeout(timerId);
+    pinGenerator.disabled = false;
+    pinGenerator.style.backgroundColor = '#495BC3';
 }
