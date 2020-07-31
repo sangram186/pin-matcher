@@ -5,6 +5,10 @@ body {
     background: #10101B;
     height: 100vh;
 }
+.container{
+    padding-top: 60px;
+    position: relative;
+}
 
 .half-width {
     height: 570px;
@@ -117,9 +121,8 @@ color: #E0B612;
     color: #ffffff;
     font-size: 19px;
     background: #222436;
-    top: 2px;
-    left: 43%;
-    /* display: none; */
+    top: 14px;
+    left: 39%;
     border-radius: 5px;
-    margin: 12px auto;
+    position: absolute;
 }
