@@ -56,7 +56,8 @@ function remainTry(clickCount){
     if(clickCount == 3){
         tryStatus.innerText = 0;
         submit.disabled = true;
-        
+        clearTimeout(timerId);
+        elem.style.display = 'none';
     }
     if(clickCount == 0){
         tryStatus.innerText = 3;
