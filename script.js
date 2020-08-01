@@ -92,7 +92,7 @@ function submitButton(){
 let timerId;
 
 function timer(){
-    let timeLeft = 10;
+    let timeLeft = 20;
     timerId = setInterval(countdown, 1000);
     function countdown() {
         if (timeLeft == -1) {
