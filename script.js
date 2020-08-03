@@ -75,7 +75,7 @@ function submitButton(){
     else if(matchPinValue !== randomPin) {
         matched.style.display = 'none';
         notMatched.style.display = 'block';
-        submitCount++;                      // If not match it count's the clicks.
+        submitCount++;                      // If not matched it count's the clicks.
         remainTry(submitCount);
     }
     else if (matchPinValue === randomPin){
@@ -96,8 +96,6 @@ function timer(){
     timerId = setInterval(countdown, 1000);
     function countdown() {
         if (timeLeft == -1) {
-            // clearTimeout(timerId);
-            // submit.disabled = true;
             removeTimer();
             doSomething();
         } else {
@@ -109,8 +107,6 @@ function timer(){
     }
     function doSomething() {
         elem.innerText = 'Your Time is Over, Try Again!';
-        // pinGenerator.disabled = false;
-        // pinGenerator.style.backgroundColor = '#495BC3';
     }
 }
 
